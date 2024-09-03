@@ -4,6 +4,7 @@ import './Css.css';
 
 export default function Code() {
   const [inputValue, setInputValue] = useState('');
+  const [language, setLanguage] = useState('Python'); // Default language is set to Python
   const [receivedData, setReceivedData] = useState('');
   const [submitted, setSubmitted] = useState(false);
 
@@ -11,11 +12,15 @@ export default function Code() {
     setInputValue(e.target.value);
   };
 
+  const handleLanguageChange = (e) => {
+    setLanguage(e.target.value);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      await axios.post('http://localhost:5000/', { data: inputValue });
+      await axios.post('http://localhost:5000/', { data: `Write a code for ${inputValue} in ${language} only code without side headings` });
 
       const response = await axios.get('http://localhost:5000/');
       setReceivedData(response.data.data);
@@ -49,6 +54,10 @@ export default function Code() {
     }
   };
 
+  const handleRefresh = () => {
+    window.location.reload(); // Refreshes the page
+  };
+
   return (
     <div className='Rside-container'>
       {!submitted ? (
@@ -57,9 +66,15 @@ export default function Code() {
             type='text'
             value={inputValue}
             onChange={handleInputChange}
-            placeholder='Enter some information'
+            placeholder='Paste the question'
             className='input-field'
           />
+          <select value={language} onChange={handleLanguageChange} className='select-field'>
+            <option value='Python'>Python</option>
+            <option value='C++'>C++</option>
+            <option value='Java'>Java</option>
+            <option value='C'>C</option>
+          </select>
           <button type='submit' className='submit-button'>Submit</button>
         </form>
       ) : (
@@ -72,6 +87,7 @@ export default function Code() {
           <div className='button-container'>
             <button onClick={handleCopy} className='copy-button'>Copy</button>
             <button onClick={handleShare} className='share-button'>Share</button>
+            <button onClick={handleRefresh} className='refresh-button'>Refresh</button>
           </div>
         </div>
       )}

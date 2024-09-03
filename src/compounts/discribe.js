@@ -15,7 +15,7 @@ export default function Discribe() {
     e.preventDefault();
 
     try {
-      await axios.post('http://localhost:5000/', { data: inputValue });
+      await axios.post('http://localhost:5000/', { data: `describe about ${inputValue}` });
 
       const response = await axios.get('http://localhost:5000/');
       setReceivedData(response.data.data);
@@ -48,6 +48,10 @@ export default function Discribe() {
       alert('Web Share API is not supported in this browser.');
     }
   };
+  const handleRefresh = () => {
+    window.location.reload(); // Refreshes the page
+  };
+
 
   return (
     <div className='Rside-container'>
@@ -57,7 +61,7 @@ export default function Discribe() {
             type='text'
             value={inputValue}
             onChange={handleInputChange}
-            placeholder='Enter some information'
+            placeholder='Enter a Word or paste the info'
             className='input-field'
           />
           <button type='submit' className='submit-button'>Submit</button>
@@ -72,6 +76,7 @@ export default function Discribe() {
           <div className='button-container'>
             <button onClick={handleCopy} className='copy-button'>Copy</button>
             <button onClick={handleShare} className='share-button'>Share</button>
+            <button onClick={handleRefresh} className='refresh-button'>Refresh</button>
           </div>
         </div>
       )}

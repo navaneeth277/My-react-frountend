@@ -15,7 +15,7 @@ export default function Importantpoints() {
     e.preventDefault();
 
     try {
-      await axios.post('http://localhost:5000/', { data: inputValue });
+      await axios.post('http://localhost:5000/', { data: `make important points from${inputValue}` });
 
       const response = await axios.get('http://localhost:5000/');
       setReceivedData(response.data.data);
@@ -48,6 +48,10 @@ export default function Importantpoints() {
       alert('Web Share API is not supported in this browser.');
     }
   };
+  const handleRefresh = () => {
+    window.location.reload(); // Refreshes the page
+  };
+
 
   return (
     <div className='Rside-container'>
@@ -72,6 +76,7 @@ export default function Importantpoints() {
           <div className='button-container'>
             <button onClick={handleCopy} className='copy-button'>Copy</button>
             <button onClick={handleShare} className='share-button'>Share</button>
+            <button onClick={handleRefresh} className='refresh-button'>Refresh</button>
           </div>
         </div>
       )}

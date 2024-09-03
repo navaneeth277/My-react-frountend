@@ -48,6 +48,10 @@ export default function Question() {
       alert('Web Share API is not supported in this browser.');
     }
   };
+  const handleRefresh = () => {
+    window.location.reload(); // Refreshes the page
+  };
+
 
   return (
     <div className='Rside-container'>
@@ -57,7 +61,7 @@ export default function Question() {
             type='text'
             value={inputValue}
             onChange={handleInputChange}
-            placeholder='Enter some information'
+            placeholder='Enter any question'
             className='input-field'
           />
           <button type='submit' className='submit-button'>Submit</button>
@@ -72,6 +76,7 @@ export default function Question() {
           <div className='button-container'>
             <button onClick={handleCopy} className='copy-button'>Copy</button>
             <button onClick={handleShare} className='share-button'>Share</button>
+            <button onClick={handleRefresh} className='refresh-button'>Refresh</button>
           </div>
         </div>
       )}

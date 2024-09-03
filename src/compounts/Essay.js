@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './Css.css';
 
-export default function Essay() {
+export default function SubjectWise() {
   const [inputValue, setInputValue] = useState('');
+  const [numOfWords, setNumOfWords] = useState(''); // Default value set to 100
   const [receivedData, setReceivedData] = useState('');
   const [submitted, setSubmitted] = useState(false);
 
@@ -11,11 +12,16 @@ export default function Essay() {
     setInputValue(e.target.value);
   };
 
+  const handleNumOfWordsChange = (e) => {
+    setNumOfWords(e.target.value);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      await axios.post('http://localhost:5000/', { data: inputValue });
+      const dataToSend = `${inputValue} with ${numOfWords} words`;
+      await axios.post('http://localhost:5000/', { data: dataToSend });
 
       const response = await axios.get('http://localhost:5000/');
       setReceivedData(response.data.data);
@@ -49,6 +55,10 @@ export default function Essay() {
     }
   };
 
+  const handleRefresh = () => {
+    window.location.reload(); // Refreshes the page
+  };
+
   return (
     <div className='Rside-container'>
       {!submitted ? (
@@ -58,6 +68,13 @@ export default function Essay() {
             value={inputValue}
             onChange={handleInputChange}
             placeholder='Enter some information'
+            className='input-field'
+          />
+          <input
+            type='number'
+            value={numOfWords}
+            onChange={handleNumOfWordsChange}
+            placeholder='Enter number of words'
             className='input-field'
           />
           <button type='submit' className='submit-button'>Submit</button>
@@ -72,6 +89,7 @@ export default function Essay() {
           <div className='button-container'>
             <button onClick={handleCopy} className='copy-button'>Copy</button>
             <button onClick={handleShare} className='share-button'>Share</button>
+            <button onClick={handleRefresh} className='refresh-button'>Refresh</button> {/* New Refresh Button */}
           </div>
         </div>
       )}
