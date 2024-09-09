@@ -35,7 +35,7 @@ export default function Lside() {
 
   return (
     <div className='Lside-buttons'>
-      {['Question', 'Subject_wise', 'Discribe', 'Summarize', 'Keyworbs', 'Important ponts', 'Essay','Code', 'PDF'].map((label, index) => (
+      {['Question', 'Subject_wise', 'Describe', 'Summarize', 'Keywords', 'Important points', 'Essay','Code', 'PDF'].map((label, index) => (
         <button
           key={index}
           className={`L-Button ${activeButton === index ? 'active' : ''}`}
